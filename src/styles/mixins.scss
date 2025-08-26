@@ -1,0 +1,32 @@
+@use 'sass:color';
+@use './variables' as *;
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+@mixin button-style($bg-color, $text-color: #fff) {
+    background: $bg-color;
+    color: $text-color;
+    padding: $spacing-sm $spacing-md;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  
+    &:hover {
+      background: $bg-color;
+    }
+}
+  
+@mixin responsive-grid($columns) {
+    display: grid;
+    grid-template-columns: repeat($columns, 1fr);
+    gap: $spacing-md;
+  
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+}
+  
