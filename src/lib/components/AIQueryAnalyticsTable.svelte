@@ -96,7 +96,7 @@
     sortKey = key;
     sortOrder = 'asc';
   }
-  updateTable(); // Add this line to apply the sorting
+  updateTable();
 }
 
 
@@ -292,10 +292,8 @@
     updateFilteredProviders();
     updateTable();
   }
-  $: {
-  const temp = applyFilters(data, filters);
-  filteredData = applySorting(temp, sortKey, sortOrder);
-  analytics = computeAnalytics(filteredData);
+  $: if (data.length > 0) {
+  updateTable();
 }
 </script>
 

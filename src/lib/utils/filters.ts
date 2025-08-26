@@ -27,7 +27,6 @@ export function applyFilters(data: AIQueryRecord[], filters: AIQueryFilterOption
 }
 
 export function applySorting(data: AIQueryRecord[], sortKey: keyof AIQueryRecord, order: 'asc' | 'desc') {
-  console.log(sortKey)
   const sorted = data.slice().sort((a, b) => {
     const valA = a[sortKey];
     const valB = b[sortKey];
@@ -52,6 +51,5 @@ export function applySorting(data: AIQueryRecord[], sortKey: keyof AIQueryRecord
     }
     return order === 'asc' ? comparison : -comparison;
   });
-  console.log(sorted)
   return sorted
 }
