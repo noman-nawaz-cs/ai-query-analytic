@@ -27,11 +27,31 @@ export function applyFilters(data: AIQueryRecord[], filters: AIQueryFilterOption
 }
 
 export function applySorting(data: AIQueryRecord[], sortKey: keyof AIQueryRecord, order: 'asc' | 'desc') {
-  return data.slice().sort((a, b) => {
+  console.log(sortKey)
+  const sorted = data.slice().sort((a, b) => {
     const valA = a[sortKey];
     const valB = b[sortKey];
+    
+    // Handle null/undefined values
+    if (valA === null || valA === undefined) return order === 'asc' ? -1 : 1;
+    if (valB === null || valB === undefined) return order === 'asc' ? 1 : -1;
     if (valA === valB) return 0;
-    const comparison = valA && valB && valA > valB ? 1 : -1;
+
+    // Handle different data types properly
+    let comparison = 0;
+    
+    if (typeof valA === 'number' && typeof valB === 'number') {
+      comparison = valA - valB;
+    } else if (typeof valA === 'string' && typeof valB === 'string') {
+      comparison = valA.localeCompare(valB);
+    } else if (valA instanceof Date && valB instanceof Date) {
+      comparison = valA.getTime() - valB.getTime();
+    } else {
+      // Convert to string for comparison as fallback
+      comparison = String(valA).localeCompare(String(valB));
+    }
     return order === 'asc' ? comparison : -comparison;
   });
+  console.log(sorted)
+  return sorted
 }
